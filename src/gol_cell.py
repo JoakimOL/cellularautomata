@@ -31,7 +31,6 @@ class GOL_Cell(Cell):
 
     def commit_color(self):
         if(self.changed):
-            self.logger.info(f"going from {self.living} to {self.next_living}")
             self.living = self.next_living
             if self.next_living:
                 self.color = self.live_color

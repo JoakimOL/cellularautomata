@@ -7,7 +7,7 @@ class GOL_Automata(Automata):
 
     def __init__(self, width, height, windowsize, wrap = True, font = None):
         super().__init__(width,height,windowsize,wrap,font)
-        self.selected = False
+        self.selected = True
 
     def setup_board(self):
         self.board = [ [GOL_Cell(x,y, cellsize=self.CELLSIZE, font = self.font) for y in range(self.height)] for x in range(self.width) ]
