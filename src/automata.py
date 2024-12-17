@@ -119,7 +119,6 @@ class RPS_Automata(Automata):
 
     def setup_board(self):
         self.board = [ [RPS_Cell(x,y, RPS_Cell.Kind.EMPTY, cellsize=self.CELLSIZE, font = self.font) for y in range(self.height)] for x in range(self.width) ]
-        # self.board = [ [Cell(x,y, cellsize=self.CELLSIZE, initial_color = list(self.colors.values())[(x+y)%3]) for y in range(self.height)] for x in range(self.width) ]
         for y in range(self.height):
             for x in range(self.width):
                 self.logger.debug(f"assigning neighbors to {x},{y}")

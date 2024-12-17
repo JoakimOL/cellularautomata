@@ -34,36 +34,9 @@ class Cell:
 
     def apply_rule(self):
         self.logger.warn("calling apply_rule on baseclass Cell")
-        # random_neighbour = self.neighbours[random.randint(0,len(self.neighbours)-1)]
-
-        # if random_neighbour.color == self.color:
-        #     return
-        # else:
-        #     self.new_color = random_neighbour.color
-        #     self.changed = True
-        # if random_neighbour.color == self.color:
-        #     return
-        # elif self.color == (255,255,255):
-        #     self.new_color = random_neighbour.color
-        #     self.changed = True
-        # elif self.color == (255,0,0) and random_neighbour.color == (0,255,0):
-        #     self.new_color = (0,255,0)
-        #     self.changed = True
-        # elif self.color == (0,255,0) and random_neighbour.color == (0,0,255):
-        #     self.new_color = (0,0,255)
-        #     self.changed = True
-        # elif self.color == (0,0,255) and random_neighbour.color == (255,0,0):
-        #     self.new_color = (255,0,0)
-        #     self.changed = True
 
     def commit_color(self):
         self.logger.warn("calling commit color on baseclass Cell")
-        # if(self.changed):
-        #     self.logger.debug(f"changing color from {self.color} to {self.new_color}")
-        #     self.color = self.new_color
-        #     self.changed = False
-        #     return True
-        # return False
 
 class Simple_Cell(Cell):
     def __init__(self,x,y,initial_color,cellsize,font):

@@ -41,7 +41,6 @@ if __name__ == "__main__" :
     )
 
     args = parser.parse_args()
-    print(args)
     logger = logging.getLogger()
     logger.addHandler(logging.StreamHandler())
     if(args.debug):
