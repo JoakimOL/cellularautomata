@@ -122,21 +122,13 @@ class App:
                 self.second = 0
                 self.last_second = current_time
             self.dt = current_time - self.last_frame
-            if(self.running):
-                if(self.dt > self._FRAME_TIME_GOAL):
+            if(self.dt > self._FRAME_TIME_GOAL):
+                if(self.running):
                     self.loop()
-                    self.render()
-                    self.last_frame = current_time
                     self.updates += 1
-                    self.dt = 0
-                else:
-                    time_to_sleep = self._FRAME_TIME_GOAL - self.dt
-                    time.sleep(time_to_sleep)
+                self.render()
+                self.last_frame = current_time
+                self.dt = 0
             else:
-                if(self.dt > self._FRAME_TIME_GOAL):
-                    self.render()
-                    self.last_frame = current_time
-                    self.dt = 0
-                else:
-                    time_to_sleep = self._FRAME_TIME_GOAL - self.dt
-                    time.sleep(time_to_sleep)
+                time_to_sleep = self._FRAME_TIME_GOAL - self.dt
+                time.sleep(time_to_sleep)
