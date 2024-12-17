@@ -64,6 +64,10 @@ class App:
             self.logger.info("space!")
             self.running = not self.running
             self.run()
+        elif key == pygame.K_s:
+            if(not self.running):
+                self.loop()
+                self.render()
         else:
             # automata specific keybindings
             self.automata.handle_key_event(key, unicode)
