@@ -33,7 +33,15 @@ if __name__ == "__main__" :
         action="store_true"
     )
 
+    parser.add_argument(
+        "--type",
+        help="choose which rules to use. rps = rock-paper-scissors. gol = game of life",
+        choices = ['simple','rps', 'gol'],
+        default = "simple"
+    )
+
     args = parser.parse_args()
+    print(args)
     logger = logging.getLogger()
     logger.addHandler(logging.StreamHandler())
     if(args.debug):
@@ -43,5 +51,6 @@ if __name__ == "__main__" :
         logger.setLevel(logging.INFO)
         logger.info("set log level to INFO logging")
 
-    AutomataApp = App(args.text)
-    AutomataApp.run()
+    automataApp = App(args.type, args.text, args.wrap)
+    automataApp.run()
+

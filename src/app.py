@@ -4,11 +4,12 @@ import pygame
 import logging
 
 from pygame.locals import *
-from automata import Automata
+from automata import Automata, RPS_Automata
 from cell import Cell
 
 class App:
     def __init__(self, type, use_fonts = False, wrap = True):
+        # self.colorpicker = self.ColorPicker()
         self.running = False
         self.should_exit = False
         pygame.init()
@@ -20,7 +21,13 @@ class App:
 
         self.surface = None
         self.size = self.width, self.height = 800, 800
-        self.automata = Automata(200,200, self.size, self.colorpicker.colors, self.system_font)
+        if(type == "rps"):
+            self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, font=self.system_font)
+            # self.automata = RPS_Automata(10,10,self.size,wrap=wrap, font=self.system_font)
+        elif(type == "gol"):
+            self.automata = Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
+        else:
+            self.automata = Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
         self.dt = 0 # time since last frame
         self.updates = 0 # number of frame last second
         self.last_second = 0 # timestamp of when we started counting updates
@@ -66,7 +73,6 @@ class App:
         # self.logger.info(f"mousepos: {pos} button: {button}")
 
     def handle_mouse_move_event(self, pos, rel):
-        print(pos,rel)
         x, y = pos
         if(x > self.width-1 or y > self.height-1):
             return
