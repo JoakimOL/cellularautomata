@@ -6,6 +6,7 @@ import logging
 from pygame.locals import *
 from automata import Automata
 from rps_automata import RPS_Automata
+from gol_automata import GOL_Automata
 
 class App:
     def __init__(self, type, use_fonts = False, wrap = True):
@@ -27,7 +28,7 @@ class App:
         elif(type == "rps_spiral"):
             self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=True, font=self.system_font)
         elif(type == "gol"):
-            self.automata = Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
+            self.automata = GOL_Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
         else:
             self.automata = Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
         self.dt = 0 # time since last frame
