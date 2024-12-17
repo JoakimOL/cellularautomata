@@ -32,7 +32,7 @@ class App:
         self.updates = 0 # number of frame last second
         self.last_second = 0 # timestamp of when we started counting updates
         self.last_frame = 0 # timestamp of last frame we drew
-        self._FRAME_TIME_GOAL = 1/10 # Aiming for 10 fps
+        self._FRAME_TIME_GOAL = 1/20 # Aiming for 20 fps
         self.drawing = False
         self.logger = logging.getLogger()
         self.surface = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
