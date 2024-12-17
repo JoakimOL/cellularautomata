@@ -27,6 +27,12 @@ if __name__ == "__main__" :
         action="store_true"
     )
 
+    parser.add_argument(
+        "--wrap",
+        help="enable edge wrapping",
+        action="store_true"
+    )
+
     args = parser.parse_args()
     logger = logging.getLogger()
     logger.addHandler(logging.StreamHandler())
@@ -39,4 +45,3 @@ if __name__ == "__main__" :
 
     AutomataApp = App(args.text)
     AutomataApp.run()
-

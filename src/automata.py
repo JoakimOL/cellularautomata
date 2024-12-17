@@ -4,14 +4,28 @@ import pygame
 from cell import Cell
 
 class Automata:
-    def __init__(self, width, height, windowsize, colors, font = None):
+    def __init__(self, width, height, windowsize, wrap = True, font = None):
         self.logger = logging.getLogger()
+        self.RED = (255,0,0)
+        self.GREEN = (0,255,0)
+        self.BLUE = (0,0,255)
+        self.BLACK = (0,0,0)
+        self.WHITE = (255,255,255)
+
+        self.colors = {
+            "red": self.RED,
+            "green": self.GREEN,
+            "blue": self.BLUE,
+            "black": self.BLACK,
+            "white": self.WHITE
+        }
         smallest = min(windowsize[0], windowsize[1])
         self.CELLSIZE = int(smallest / width)
         self.width = width
         self.height = height
-        self.colors = colors
+        self.selected_color = self.colors["black"]
         self.font = font
+        self.wrap = wrap
         self.setup_board()
 
     def __str__(self):
@@ -19,14 +33,14 @@ class Automata:
 
     def assign_neighbours_at(self, x, y):
         cell = self.board[x][y]
-        self.bounds_checked_add_neighbour_at(cell, x-1, y  )
-        self.bounds_checked_add_neighbour_at(cell, x  , y-1)
-        # self.bounds_checked_add_neighbour_at(cell, x-1, y-1)
-        self.bounds_checked_add_neighbour_at(cell, x+1, y  )
-        self.bounds_checked_add_neighbour_at(cell, x  , y+1)
-        # self.bounds_checked_add_neighbour_at(cell, x+1, y+1)
-        # self.bounds_checked_add_neighbour_at(cell, x+1, y-1)
-        # self.bounds_checked_add_neighbour_at(cell, x-1, y+1)
+        self.bounds_checked_add_neighbour_at(cell, x-1, y  , self.wrap)
+        self.bounds_checked_add_neighbour_at(cell, x  , y-1, self.wrap)
+        self.bounds_checked_add_neighbour_at(cell, x-1, y-1, self.wrap)
+        self.bounds_checked_add_neighbour_at(cell, x+1, y  , self.wrap)
+        self.bounds_checked_add_neighbour_at(cell, x  , y+1, self.wrap)
+        self.bounds_checked_add_neighbour_at(cell, x+1, y+1, self.wrap)
+        self.bounds_checked_add_neighbour_at(cell, x+1, y-1, self.wrap)
+        self.bounds_checked_add_neighbour_at(cell, x-1, y+1, self.wrap)
         cell.initialized = True
 
     def setup_board(self):
@@ -37,11 +51,15 @@ class Automata:
                 self.logger.debug(f"assigning neighbors to {x},{y}")
                 self.assign_neighbours_at(x,y)
 
-    def bounds_checked_add_neighbour_at(self, cell, x, y):
-        if(x >= self.width):
+    def bounds_checked_add_neighbour_at(self, cell, x, y, wrap = True):
+        if(x >= self.width and wrap):
             x = self.width - x
-        if(y >= self.height):
+        elif (x >= self.width or x < 0 and not wrap):
+            return
+        if(y >= self.height and wrap):
             y = self.height - y
+        elif (y >= self.width or y < 0 and not wrap):
+            return
         cell.neighbours.append(self.board[x][y])
 
     def draw(self, surface_to_draw_on):
@@ -63,7 +81,27 @@ class Automata:
         self.logger.info(f"{updated} cells updated")
 
 
-    def mouse_click_at(self, pos, color):
+    def mouse_click_at(self, pos):
         cell = self.board[pos[0]][pos[1]]
-        cell.color = color
+        cell.color = self.selected_color
 
+    def handle_key_event(self, key, unicode):
+        if key == pygame.K_1:
+            self.logger.info("selected red")
+            self.selected_color = self.colors["red"]
+        elif key == pygame.K_2:
+            self.logger.info("selected green")
+            self.selected_color = self.colors["green"]
+        elif key == pygame.K_3:
+            self.logger.info("selected blue")
+            self.selected_color = self.colors["blue"]
+        elif key == pygame.K_4:
+            self.logger.info("selected black")
+            self.selected_color = self.colors["black"]
+        elif key == pygame.K_5:
+            self.logger.info("selected white")
+            self.selected_color = self.colors["white"]
+        else:
+            self.logger.info(f"unhandled input: {unicode}")
+    def handle_key_event(self, key, unicode):
+        if key == pygame.K_1:

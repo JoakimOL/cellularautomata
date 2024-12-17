@@ -8,23 +8,7 @@ from automata import Automata
 from cell import Cell
 
 class App:
-    class ColorPicker:
-        def __init__(self):
-            self.selected_color = (0,0,0)
-            self.RED = (255,0,0)
-            self.GREEN = (0,255,0)
-            self.BLUE = (0,0,255)
-            self.BLACK = (0,0,0)
-
-            self.colors = {
-                "red": self.RED,
-                "green": self.GREEN,
-                "blue": self.BLUE,
-                "black": self.BLACK
-            }
-
-    def __init__(self, use_fonts = False):
-        self.colorpicker = self.ColorPicker()
+    def __init__(self, type, use_fonts = False, wrap = True):
         self.running = False
         self.should_exit = False
         pygame.init()
@@ -55,6 +39,7 @@ class App:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             self.drawing = True
         elif event.type == pygame.MOUSEBUTTONUP:
+            self.handle_mouse_move_event(event.pos, None)
             self.drawing = False
         elif event.type == pygame.MOUSEMOTION:
             # self.handle_mouse_press_event(event.pos, event.button)
@@ -62,31 +47,21 @@ class App:
                 self.handle_mouse_move_event(event.pos, event.rel)
             
     def handle_key_event(self, key, unicode):
+        # Global key bindings
         if key == pygame.K_ESCAPE or key == pygame.K_q:
             self.should_exit = True
         elif key == pygame.K_SPACE:
             self.logger.info("space!")
             self.running = not self.running
             self.run()
-        elif key == pygame.K_1:
-            self.logger.info("selected red")
-            self.colorpicker.selected_color = self.colorpicker.colors["red"]
-        elif key == pygame.K_2:
-            self.logger.info("selected green")
-            self.colorpicker.selected_color = self.colorpicker.colors["green"]
-        elif key == pygame.K_3:
-            self.logger.info("selected blue")
-            self.colorpicker.selected_color = self.colorpicker.colors["blue"]
-        elif key == pygame.K_4:
-            self.logger.info("selected black")
-            self.colorpicker.selected_color = self.colorpicker.colors["black"]
         else:
-            self.logger.info(f"unhandled input: {unicode}")
+            # automata specific keybindings
+            self.automata.handle_key_event(key, unicode)
         
     def handle_mouse_press_event(self, pos, button):
         x, y = pos
         translated_pos = x // self.automata.CELLSIZE, y // self.automata.CELLSIZE
-        self.automata.mouse_click_at(translated_pos, button, self.colorpicker.selected_color)
+        self.automata.mouse_click_at(translated_pos)
         pygame.display.update()
         # self.logger.info(f"mousepos: {pos} button: {button}")
 
@@ -96,7 +71,7 @@ class App:
         if(x > self.width-1 or y > self.height-1):
             return
         translated_pos = x // self.automata.CELLSIZE, y // self.automata.CELLSIZE
-        self.automata.mouse_click_at(translated_pos, self.colorpicker.selected_color)
+        self.automata.mouse_click_at(translated_pos)
         pygame.display.update()
 
             
