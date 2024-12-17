@@ -16,7 +16,7 @@ class Cell:
         self.neighbours = []
         self.initialized = False
         self.font = font
-        self.text = None
+        self.texts = {}
     
     def is_initialized():
         return self.initialized
@@ -28,9 +28,9 @@ class Cell:
         self.logger.debug(f"drawing at ({self.x},{self.y}). color = {self.color}")
         rect = pygame.draw.rect(surface_to_draw_on, self.color, (self.x*self.SIZE, self.y*self.SIZE, self.SIZE, self.SIZE))
         if(not self.font is None):
-            if(self.text is None):
-                self.text = self.font.render(str(self.color), True, (255,255,255))
-            surface_to_draw_on.blit(self.text, (self.x*self.SIZE, self.y*self.SIZE))
+            if(not self.color in self.texts):
+                self.texts[self.color] = self.font.render(str(self.color), True, (0,0,0))
+            surface_to_draw_on.blit(self.texts[self.color], (self.x*self.SIZE, self.y*self.SIZE))
 
     def apply_rule(self):
         random_neighbour = self.neighbours[random.randint(0,len(self.neighbours)-1)]
