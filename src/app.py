@@ -4,8 +4,8 @@ import pygame
 import logging
 
 from pygame.locals import *
-from automata import Automata, RPS_Automata
-from cell import Cell
+from automata import Automata
+from rps_automata import RPS_Automata
 
 class App:
     def __init__(self, type, use_fonts = False, wrap = True):
@@ -22,8 +22,10 @@ class App:
         self.surface = None
         self.size = self.width, self.height = 800, 800
         if(type == "rps"):
-            self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, font=self.system_font)
+            self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=False, font=self.system_font)
             # self.automata = RPS_Automata(10,10,self.size,wrap=wrap, font=self.system_font)
+        elif(type == "rps_spiral"):
+            self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=True, font=self.system_font)
         elif(type == "gol"):
             self.automata = Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
         else:

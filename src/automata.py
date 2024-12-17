@@ -1,7 +1,7 @@
 import logging
 import pygame
 
-from cell import Simple_Cell, RPS_Cell
+from cell import Simple_Cell
 
 class Automata:
     def __init__(self, width, height, windowsize, wrap = True, font = None):
@@ -104,48 +104,3 @@ class Automata:
         else:
             self.logger.info(f"unhandled input: {unicode}")
         
-class RPS_Automata(Automata):
-
-    def __init__(self, width, height, windowsize, wrap = True, font = None):
-        super().__init__(width,height,windowsize,wrap,font)
-        self.selected_kind = RPS_Cell.Kind.EMPTY
-        self.RPS_COLORS = {
-            "red": (255,0,0),
-            "green": (0,255,0),
-            "blue": (0,0,255),
-            "black": (0,0,0),
-            "white": (255,255,255)
-        }
-
-    def setup_board(self):
-        self.board = [ [RPS_Cell(x,y, RPS_Cell.Kind.EMPTY, cellsize=self.CELLSIZE, font = self.font) for y in range(self.height)] for x in range(self.width) ]
-        for y in range(self.height):
-            for x in range(self.width):
-                self.logger.debug(f"assigning neighbors to {x},{y}")
-                self.assign_neighbours_at(x,y)
-
-    def handle_key_event(self, key, unicode):
-        if key == pygame.K_1:
-            self.logger.info("selected rock")
-            self.selected_kind = RPS_Cell.Kind.ROCK
-        elif key == pygame.K_2:
-            self.logger.info("selected PAPER")
-            self.selected_kind = RPS_Cell.Kind.PAPER
-        elif key == pygame.K_3:
-            self.logger.info("selected SCISSORS")
-            self.selected_kind = RPS_Cell.Kind.SCISSORS
-        elif key == pygame.K_4:
-            self.logger.info("selected WALL")
-            self.selected_kind = RPS_Cell.Kind.WALL
-        elif key == pygame.K_5:
-            self.logger.info("selected EMPTY")
-            self.selected_kind = RPS_Cell.Kind.EMPTY
-        else:
-            self.logger.info(f"unhandled input: {unicode}")
-
-    def mouse_click_at(self, pos):
-        cell = self.board[pos[0]][pos[1]]
-        cell.kind = self.selected_kind
-        cell.color = cell.KIND_COLORS[cell.kind]
-
-
