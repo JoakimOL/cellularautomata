@@ -1,6 +1,13 @@
 # Cellular Automata
 
-Quick steps:
+### Keybindings:
+
+- Mouseclick and drag: draw cells
+- space: start/stop
+- `s`: step one iteration
+- numbers 1-5: change cell types (varies between automatas)
+
+### Quick steps:
 ```
 $ python3 -m venv venv
 $ source venv/bin/activate
