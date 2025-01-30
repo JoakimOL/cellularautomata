@@ -7,6 +7,7 @@ from pygame.locals import *
 from automata import Simple_Automata
 from rps_automata import RPS_Automata
 from gol_automata import GOL_Automata
+from powder_automata import Powder_Automata
 
 class App:
     def __init__(self, type, use_fonts = False, wrap = True):
@@ -29,6 +30,8 @@ class App:
             self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=True, font=self.system_font)
         elif(type == "gol"):
             self.automata = GOL_Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
+        elif(type == "powder"):
+            self.automata = Powder_Automata(self.width//8,self.height//8, self.size, wrap=wrap, font=self.system_font)
         else:
             self.automata = Simple_Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
         self.dt = 0 # time since last frame
