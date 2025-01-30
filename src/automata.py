@@ -33,14 +33,14 @@ class Automata:
 
     def assign_neighbours_at(self, x, y):
         cell = self.board[x][y]
-        cell.left_of      = self.bounds_checked_add_neighbour_at(cell, x-1, y  , self.wrap)
         cell.above        = self.bounds_checked_add_neighbour_at(cell, x  , y-1, self.wrap)
         cell.above_left   = self.bounds_checked_add_neighbour_at(cell, x-1, y-1, self.wrap)
+        cell.above_right  = self.bounds_checked_add_neighbour_at(cell, x+1, y-1, self.wrap)
+        cell.left_of      = self.bounds_checked_add_neighbour_at(cell, x-1, y  , self.wrap)
         cell.right_of     = self.bounds_checked_add_neighbour_at(cell, x+1, y  , self.wrap)
         cell.below        = self.bounds_checked_add_neighbour_at(cell, x  , y+1, self.wrap)
-        cell.below_right  = self.bounds_checked_add_neighbour_at(cell, x+1, y+1, self.wrap)
-        cell.above_right  = self.bounds_checked_add_neighbour_at(cell, x+1, y-1, self.wrap)
         cell.below_left   = self.bounds_checked_add_neighbour_at(cell, x-1, y+1, self.wrap)
+        cell.below_right  = self.bounds_checked_add_neighbour_at(cell, x+1, y+1, self.wrap)
 
     def setup_board(self):
         self.logger.warn("trying to initialize the base automaton")
