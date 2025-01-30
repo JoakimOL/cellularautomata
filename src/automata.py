@@ -33,23 +33,18 @@ class Automata:
 
     def assign_neighbours_at(self, x, y):
         cell = self.board[x][y]
-        self.bounds_checked_add_neighbour_at(cell, x-1, y  , self.wrap)
-        self.bounds_checked_add_neighbour_at(cell, x  , y-1, self.wrap)
-        self.bounds_checked_add_neighbour_at(cell, x-1, y-1, self.wrap)
-        self.bounds_checked_add_neighbour_at(cell, x+1, y  , self.wrap)
-        self.bounds_checked_add_neighbour_at(cell, x  , y+1, self.wrap)
-        self.bounds_checked_add_neighbour_at(cell, x+1, y+1, self.wrap)
-        self.bounds_checked_add_neighbour_at(cell, x+1, y-1, self.wrap)
-        self.bounds_checked_add_neighbour_at(cell, x-1, y+1, self.wrap)
+        cell.left_of      = self.bounds_checked_add_neighbour_at(cell, x-1, y  , self.wrap)
+        cell.above        = self.bounds_checked_add_neighbour_at(cell, x  , y-1, self.wrap)
+        cell.above_left   = self.bounds_checked_add_neighbour_at(cell, x-1, y-1, self.wrap)
+        cell.right_of     = self.bounds_checked_add_neighbour_at(cell, x+1, y  , self.wrap)
+        cell.below        = self.bounds_checked_add_neighbour_at(cell, x  , y+1, self.wrap)
+        cell.below_right = self.bounds_checked_add_neighbour_at(cell, x+1, y+1, self.wrap)
+        cell.above_right  = self.bounds_checked_add_neighbour_at(cell, x+1, y-1, self.wrap)
+        cell.below_left  = self.bounds_checked_add_neighbour_at(cell, x-1, y+1, self.wrap)
         cell.initialized = True
 
     def setup_board(self):
-        self.board = [ [Simple_Cell(x,y, cellsize=self.CELLSIZE, initial_color = self.colors["white"], font = self.font) for y in range(self.height)] for x in range(self.width) ]
-        # self.board = [ [Cell(x,y, cellsize=self.CELLSIZE, initial_color = list(self.colors.values())[(x+y)%3]) for y in range(self.height)] for x in range(self.width) ]
-        for y in range(self.height):
-            for x in range(self.width):
-                self.logger.debug(f"assigning neighbors to {x},{y}")
-                self.assign_neighbours_at(x,y)
+        self.logger.warn("trying to initialize the base automaton")
 
     def bounds_checked_add_neighbour_at(self, cell, x, y, wrap = True):
         if(x >= self.width and wrap):
@@ -60,7 +55,9 @@ class Automata:
             y = self.height - y
         elif (y >= self.width or y < 0 and not wrap):
             return
-        cell.neighbours.append(self.board[x][y])
+        neighbour = self.board[x][y]
+        cell.neighbours.append(neighbour)
+        return neighbour
 
     def draw(self, surface_to_draw_on):
         for line_of_cells in self.board:
@@ -80,6 +77,24 @@ class Automata:
                     updated += 1
         self.logger.info(f"{updated} cells updated")
 
+
+    def mouse_click_at(self, pos):
+        self.logger.warn("mouse_click_at in base automaton!")
+
+    def handle_key_event(self, key, unicode):
+        self.logger.warn("handle_key_event in base automaton!")
+        
+
+class Simple_Automata(Automata):
+    def __init__(self, width, height, windowsize, wrap = True, font = None):
+        super().__init__(width,height,windowsize,wrap,font)
+
+    def setup_board(self):
+        self.board = [ [Simple_Cell(x,y, cellsize=self.CELLSIZE, initial_color = self.colors["white"], font = self.font) for y in range(self.height)] for x in range(self.width) ]
+        for y in range(self.height):
+            for x in range(self.width):
+                self.logger.debug(f"assigning neighbors to {x},{y}")
+                self.assign_neighbours_at(x,y)
 
     def mouse_click_at(self, pos):
         cell = self.board[pos[0]][pos[1]]
@@ -103,4 +118,3 @@ class Automata:
             self.selected_color = self.colors["white"]
         else:
             self.logger.info(f"unhandled input: {unicode}")
-        
