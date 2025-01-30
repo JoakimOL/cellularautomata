@@ -5,9 +5,7 @@ import logging
 
 from pygame.locals import *
 from automata import Simple_Automata
-from rps_automata import RPS_Automata
-from gol_automata import GOL_Automata
-from powder_automata import Powder_Automata
+from min_automat import Min_Automata
 
 class App:
     def __init__(self, type, use_fonts = False, wrap = True):
@@ -22,18 +20,9 @@ class App:
 
         self.surface = None
         self.size = self.width, self.height = 800, 800
-        if(type == "rps"):
-            self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=False, font=self.system_font)
-            # self.automata = RPS_Automata(10,10,self.size,wrap=wrap, spiral=False, font=self.system_font)
-        elif(type == "rps_spiral"):
-            self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=True, font=self.system_font)
-            # self.automata = RPS_Automata(10,10,self.size,wrap=wrap, spiral=True, font=self.system_font)
-        elif(type == "gol"):
-            self.automata = GOL_Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
-            # self.automata = GOL_Automata(10,10, self.size, wrap, self.system_font)
-        elif(type == "powder"):
-            self.automata = Powder_Automata(self.width//8,self.height//8, self.size, wrap=wrap, font=self.system_font)
-            # self.automata = Powder_Automata(10,10, self.size, wrap=wrap, font=self.system_font)
+        if(type == "min_egen"):
+            self.automata = Min_Automata(self.width//8,self.height//8,self.size,wrap=wrap, font=self.system_font)
+            # self.automata = Min_Automata(10,10,self.size,wrap=wrap, font=self.system_font)
         else:
             self.automata = Simple_Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
             # self.automata = Simple_Automata(10,10, self.size, wrap, self.system_font)

@@ -35,8 +35,8 @@ if __name__ == "__main__" :
 
     parser.add_argument(
         "--type",
-        help="choose which rules to use. rps = rock-paper-scissors. gol = game of life",
-        choices = ['simple','rps', 'rps_spiral', 'gol','powder'],
+        help="choose which rules to use.",
+        choices = ['simple','min_egen'],
         default = "simple"
     )
 
