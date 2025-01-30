@@ -11,7 +11,6 @@ from powder_automata import Powder_Automata
 
 class App:
     def __init__(self, type, use_fonts = False, wrap = True):
-        # self.colorpicker = self.ColorPicker()
         self.running = False
         self.should_exit = False
         pygame.init()
@@ -25,15 +24,19 @@ class App:
         self.size = self.width, self.height = 800, 800
         if(type == "rps"):
             self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=False, font=self.system_font)
-            # self.automata = RPS_Automata(10,10,self.size,wrap=wrap, font=self.system_font)
+            # self.automata = RPS_Automata(10,10,self.size,wrap=wrap, spiral=False, font=self.system_font)
         elif(type == "rps_spiral"):
             self.automata = RPS_Automata(self.width//8,self.height//8,self.size,wrap=wrap, spiral=True, font=self.system_font)
+            # self.automata = RPS_Automata(10,10,self.size,wrap=wrap, spiral=True, font=self.system_font)
         elif(type == "gol"):
             self.automata = GOL_Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
+            # self.automata = GOL_Automata(10,10, self.size, wrap, self.system_font)
         elif(type == "powder"):
             self.automata = Powder_Automata(self.width//8,self.height//8, self.size, wrap=wrap, font=self.system_font)
+            # self.automata = Powder_Automata(10,10, self.size, wrap=wrap, font=self.system_font)
         else:
             self.automata = Simple_Automata(self.width//8,self.height//8, self.size, wrap, self.system_font)
+            # self.automata = Simple_Automata(10,10, self.size, wrap, self.system_font)
         self.dt = 0 # time since last frame
         self.updates = 0 # number of frame last second
         self.last_second = 0 # timestamp of when we started counting updates
@@ -55,7 +58,6 @@ class App:
             self.handle_mouse_move_event(event.pos, None)
             self.drawing = False
         elif event.type == pygame.MOUSEMOTION:
-            # self.handle_mouse_press_event(event.pos, event.button)
             if(self.drawing):
                 self.handle_mouse_move_event(event.pos, event.rel)
             
@@ -80,7 +82,6 @@ class App:
         translated_pos = x // self.automata.CELLSIZE, y // self.automata.CELLSIZE
         self.automata.mouse_click_at(translated_pos)
         pygame.display.update()
-        # self.logger.info(f"mousepos: {pos} button: {button}")
 
     def handle_mouse_move_event(self, pos, rel):
         x, y = pos

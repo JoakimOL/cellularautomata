@@ -7,10 +7,6 @@ class Powder_Automata(Automata):
     def __init__(self, width, height, windowsize, spiral = False, wrap = True, font = None):
         super().__init__(width,height,windowsize,wrap,font)
         self.selected_kind = Powder_Cell.Kind.EMPTY
-        self.COLORS = {
-            Powder_Cell.Kind.EMPTY: (0,0,0),
-            Powder_Cell.Kind.SAND: (216,179,130),
-        }
 
     def setup_board(self):
         self.board = [ [Powder_Cell(x,y, cellsize=self.CELLSIZE, font = self.font) for y in range(self.height)] for x in range(self.width) ]

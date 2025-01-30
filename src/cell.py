@@ -14,13 +14,9 @@ class Cell:
         self.new_color = self.color
         self.changed = False
         self.neighbours = []
-        self.initialized = False
         self.font = font
         self.texts = {}
     
-    def is_initialized():
-        return self.initialized
-
     def __str__(self):
         return f"({self.x},{self.y}) = {self.color}"
 

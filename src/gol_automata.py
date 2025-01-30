@@ -1,4 +1,3 @@
-
 from gol_cell import GOL_Cell
 from automata import Automata
 import pygame
@@ -28,7 +27,6 @@ class GOL_Automata(Automata):
 
     def mouse_click_at(self, pos):
         cell = self.board[pos[0]][pos[1]]
-        # cell.set_living(self.selected)
         cell.living = self.selected
         cell.color = cell.live_color if cell.living else cell.dead_color
 
